@@ -1,2 +1,2 @@
-webSocetChat
+webSocketChat
 ============
