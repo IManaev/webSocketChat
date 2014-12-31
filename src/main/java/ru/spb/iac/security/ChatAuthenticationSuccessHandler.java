@@ -1,5 +1,6 @@
 package ru.spb.iac.security;
 
+import com.google.gson.*;
 import lombok.extern.log4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.messaging.simp.*;
@@ -29,19 +30,24 @@ public class ChatAuthenticationSuccessHandler implements AuthenticationSuccessHa
 
     private RedirectStrategy redirect = new DefaultRedirectStrategy();
 
+    private Gson gson = new Gson();
+
     @Autowired private SimpMessagingTemplate template;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         handle(request, httpServletResponse, authentication);
         HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.setMaxInactiveInterval(300);
-        }
+//        if (session != null) {
+//            session.setMaxInactiveInterval(3000);
+//        }
         LoginEvent event = new LoginEvent();
         event.setTimestamp(session.getCreationTime());
         event.setUser(((ChatUser) authentication.getPrincipal()).toUser());
         usersRepository.addUser(((WebAuthenticationDetails)authentication.getDetails()).getSessionId(),event);
+        for(Map.Entry<String, LoginEvent> user : usersRepository.getUserSessions().entrySet()){
+            template.convertAndSendToUser(user.getValue().getUser().getUsername(),"/participants",gson.toJson(usersRepository.getChatParticipants()));
+        }
         clearAuthenticationAttributes(request);
     }
 

@@ -5,9 +5,12 @@ wsChat.module("MainRegion", function (MainRegion, wsChat, Backbone, Marionette, 
 
     MainRegion.User = Backbone.Model.extend({
     });
+
     MainRegion.UserContact = Backbone.Model.extend({
         defaults:{
-            username:null
+            username:null,
+            eMail:null,
+            onLine:null
         }
     });
     MainRegion.UserContacts = Backbone.Collection.extend({

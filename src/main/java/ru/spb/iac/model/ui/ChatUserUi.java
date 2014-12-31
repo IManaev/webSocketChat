@@ -38,6 +38,11 @@ public class ChatUserUi {
     public ChatUserUi() {
     }
 
+    public ChatUserUi(String username, String eMail) {
+        this.username = username;
+        this.eMail = eMail;
+    }
+
     public ChatUserUi(String id, String username, String eMail) {
         this.id = id;
         this.username = username;

@@ -2,6 +2,7 @@ package ru.spb.iac.events;
 
 import lombok.*;
 import org.springframework.stereotype.*;
+import ru.spb.iac.model.ui.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -11,6 +12,7 @@ import java.util.concurrent.*;
  */
 @Service("chatUsersRepo")
 public class ChatUsersRepository {
+
     @Getter @Setter
     private Map<String, LoginEvent> userSessions = new ConcurrentHashMap<String, LoginEvent>();
 
@@ -28,6 +30,14 @@ public class ChatUsersRepository {
 
     public void removeUser(String sessionId) {
         userSessions.remove(sessionId);
+    }
+
+    public synchronized List<ChatUserUi> getChatParticipants(){
+        List<ChatUserUi> users = new ArrayList<ChatUserUi>();
+        for(Map.Entry<String,LoginEvent> user : userSessions.entrySet()){
+            users.add(user.getValue().getUser());
+        }
+        return users;
     }
 
 }

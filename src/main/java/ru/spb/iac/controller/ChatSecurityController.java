@@ -94,9 +94,9 @@ public class ChatSecurityController {
             GrantedAuthority[] authorities = new GrantedAuthority[1];
             authorities[0] = new SimpleGrantedAuthority("ROLE_USER");
             user.setAuthorities(authorities);
-            List<ChatUserContact> cont = new ArrayList<ChatUserContact>();
-            cont.add(new ChatUserContact("Contact 11"));
-            cont.add(new ChatUserContact("Contact 22"));
+            List<ChatUserUi> cont = new ArrayList<ChatUserUi>();
+            cont.add(new ChatUserUi("test1","test1@test.ru"));
+            cont.add(new ChatUserUi("test2","test2@test.ru"));
             user.setContacts(cont);
             mongoService.getMongoOperator(mongoDbName).save(user);
             return model;

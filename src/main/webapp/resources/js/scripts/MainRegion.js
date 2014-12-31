@@ -3,40 +3,6 @@
  */
 wsChat.module("MainRegion", function (MainRegion, wsChat, Backbone, Marionette, $, _) {
 
-    MainRegion.ContactView = Backbone.Marionette.ItemView.extend({
-        tagName:"div",
-        className:"list-group",
-        initialize: function () {
-            this.template = Handlebars.compile($("#wsChat-main-region-menu-contacts-contact").html());
-        }
-    });
-
-    MainRegion.ContactsView = Backbone.Marionette.CompositeView.extend({
-        childView: MainRegion.ContactView,
-        childViewContainer: "#contacts-list",
-        tagName: "div",
-        className: "container-fluid",
-        initialize: function () {
-            this.template = Handlebars.compile($("#wsChat-main-region-menu-contacts").html());
-        }
-    });
-
-    MainRegion.MenuLayout = Backbone.Marionette.LayoutView.extend({
-        regions: {
-            contacts: "#contacts",
-            videos: "#videos",
-            music: "#music"
-        },
-        tagName: "div",
-        className: "container-fluid",
-        initialize: function () {
-            this.template = Handlebars.compile($("#wsChat-main-region-menu").html());
-        },
-        onShow:function(){
-            this.contacts.show(new MainRegion.ContactsView({collection:new MainRegion.UserContacts(this.model.get("contacts"))}))
-        }
-    });
-
     MainRegion.RegionLayout = Backbone.Marionette.LayoutView.extend({
         regions: {
             leftMenu: "#wsLeft",
@@ -49,6 +15,10 @@ wsChat.module("MainRegion", function (MainRegion, wsChat, Backbone, Marionette, 
         },
         onShow: function(){
             this.leftMenu.show(new MainRegion.MenuLayout({model:this.model}));
+            this.rightMenu.show(new wsChat.ChatWindow.WindowLayout({model:wsChat.onlineUsers}));
+        },
+        addMessage: function(message){
+            this.rightMenu.currentView.addMessage(message);
         }
     });
 });

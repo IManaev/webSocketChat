@@ -40,7 +40,7 @@ public class ChatUser implements Serializable, UserDetails {
     @ValidEmail
     private String eMail;
 
-    private List<ChatUserContact> contacts;
+    private List<ChatUserUi> contacts;
 
     private GrantedAuthority[] authorities = null;
 
@@ -98,13 +98,6 @@ public class ChatUser implements Serializable, UserDetails {
         return new ChatUserUi(id,username,eMail);
     }
 
-    public List<ChatUserContact> getContacts() {
-        if(contacts == null){
-            contacts = new ArrayList<ChatUserContact>();
-        }
-        return contacts;
-    }
-
     public String geteMail() {
         return eMail;
     }
@@ -113,7 +106,14 @@ public class ChatUser implements Serializable, UserDetails {
         this.eMail = eMail;
     }
 
-    public void setContacts(List<ChatUserContact> contacts) {
+    public List<ChatUserUi> getContacts() {
+        if(contacts == null){
+            contacts = new ArrayList<ChatUserUi>();
+        }
+        return contacts;
+    }
+
+    public void setContacts(List<ChatUserUi> contacts) {
         this.contacts = contacts;
     }
 }

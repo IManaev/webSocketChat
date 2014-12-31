@@ -1,5 +1,6 @@
 package ru.spb.iac.events;
 
+import com.google.gson.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.*;
 import org.springframework.messaging.simp.*;
@@ -20,7 +21,7 @@ public class LogoutListener implements ApplicationListener<SessionDestroyedEvent
     ChatUsersRepository usersRepository;
 
     @Autowired private SimpMessagingTemplate template;
-
+    private Gson gson = new Gson();
     @Override
     public void onApplicationEvent(SessionDestroyedEvent event)
     {
@@ -31,6 +32,9 @@ public class LogoutListener implements ApplicationListener<SessionDestroyedEvent
             if(usersRepository.contains(sessionId)){
                 usersRepository.removeUser(sessionId);
             }
+        }
+        for(Map.Entry<String, LoginEvent> user : usersRepository.getUserSessions().entrySet()){
+            template.convertAndSendToUser(user.getValue().getUser().getUsername(),"/participants",gson.toJson(usersRepository.getChatParticipants()));
         }
     }
 

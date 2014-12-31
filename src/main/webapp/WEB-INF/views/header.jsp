@@ -21,10 +21,13 @@
 
     <script src="<c:url value="/resources/js/scripts/app.js"/>"></script>
     <script src="<c:url value="/resources/js/scripts/MainRegionModels.js"/>"></script>
+    <script src="<c:url value="/resources/js/scripts/MainRegionMenu.js"/>"></script>
+    <script src="<c:url value="/resources/js/scripts/MainRegionChatWindow.js"/>"></script>
     <script src="<c:url value="/resources/js/scripts/MainRegion.js"/>"></script>
 
     <link href="<c:url value="/resources/css/bootstrap.3.2.0.css"/>" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/chat.css"/>" rel="stylesheet"/>
     <link href="<c:url value="/resources/css/font-awesome.css"/>" rel="stylesheet"/>
+    <link href="<c:url value="/resources/css/chat-window.css"/>" rel="stylesheet"/>
 </head>
 </html>

@@ -132,3 +132,10 @@ body {
 .h-cursor-pointer:hover{
     cursor: pointer;
 }
+.fa-on{
+    color: #3071a9;
+}
+
+.fa-off{
+    color: #ddd;
+}
