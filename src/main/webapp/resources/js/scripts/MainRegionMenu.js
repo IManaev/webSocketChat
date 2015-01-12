@@ -34,7 +34,6 @@ wsChat.module("MainRegion", function (MainRegion, wsChat, Backbone, Marionette, 
         className: "container-fluid",
         initialize: function () {
             this.template = Handlebars.compile($("#wsChat-main-region-menu").html());
-//            this.listenTo(this.model, 'change', this.onShow);
         },
         onShow:function(){
             this.contacts.show(new MainRegion.ContactsView({collection: new MainRegion.UserContacts(this.model.get("contacts"))}))

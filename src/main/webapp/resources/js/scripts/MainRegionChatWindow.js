@@ -11,7 +11,7 @@ wsChat.module("ChatWindow", function (ChatWindow, wsChat, Backbone, Marionette, 
 
     ChatWindow.MessagesCollection = Backbone.Collection.extend({
         model:ChatWindow.MessageModel,
-        comparator:null,
+        comparator:"time",
         initialize: function(models,options){}
     });
 
@@ -47,8 +47,6 @@ wsChat.module("ChatWindow", function (ChatWindow, wsChat, Backbone, Marionette, 
         tagName: "div",
         className: "msg-wrap",
         initialize: function () {
-            console.log("message init")
-            console.log(this.model)
             this.template = Handlebars.compile($("#wsChat-main-region-public-chat-window-message").html());
         }
     });
@@ -78,18 +76,15 @@ wsChat.module("ChatWindow", function (ChatWindow, wsChat, Backbone, Marionette, 
         },
         onShow: function () {
             this.chatUsers.show(new ChatWindow.OnlineUsers({collection: new ChatWindow.OnlineUsersCollection(this.model.get("contacts"))}));
-//            this.chatWindow.show(new ChatWindow.Messages({collection: new ChatWindow.MessagesCollection(this.model.get("messages"))}));
         },
         refreshContacts: function () {
             this.chatUsers.show(new ChatWindow.OnlineUsers({collection: new ChatWindow.OnlineUsersCollection(this.model.get("contacts"))}));
         },
         addMessage:function(message){
-            console.log("add message to view")
-            console.log(message)
             if(this.chatWindow.currentView == null){
                 this.chatWindow.show(new ChatWindow.Messages({collection: new ChatWindow.MessagesCollection([new ChatWindow.MessageModel(message)])}))
             } else{
-                this.chatWindow.currentView.addChild(new ChatWindow.MessageModel(message),ChatWindow.Message,1)
+                this.chatWindow.currentView.addChild(new ChatWindow.MessageModel(message),ChatWindow.Message)
             }
         },
         doSend:function(){

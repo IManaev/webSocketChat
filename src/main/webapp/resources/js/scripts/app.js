@@ -3,8 +3,7 @@
  */
 
 var errorCallback = function(error) {
-    console.log("ERROR");
-    console.log(error);
+   alert(error);
 };
 
 
@@ -29,14 +28,10 @@ var connectCallback = function(){
                 contacts.push(contact);
             }
         });
-        console.log("contacts received")
-        console.log(contacts)
         wsChat.onlineUsers.set("contacts",contacts);
 
     });
     wsChat.stompClient.subscribe("/chat/messages",function(data){
-        console.log("message received")
-        console.log(data);
         wsChat.mainRegionView.addMessage(JSON.parse(data.body));
     });
 };
